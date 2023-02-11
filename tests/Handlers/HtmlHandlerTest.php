@@ -28,4 +28,19 @@ class HtmlHandlerTest extends TestCase
 
         $handler->handle(NodeFactory::factory('string'));
     }
+
+    /**
+     * Вывод строки
+     */
+    public function testHandleInt(): void
+    {
+        $handler = $this->getMockBuilder(HtmlHandler::class)
+            ->onlyMethods(['handleInt', 'handleCountable', 'addAssets'])
+            ->getMock();
+
+        $handler->expects($this->once())->method('addAssets');
+        $handler->expects($this->once())->method('handleInt');
+
+        $handler->handle(NodeFactory::factory(100));
+    }
 }

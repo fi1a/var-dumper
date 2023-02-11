@@ -18,6 +18,8 @@ class NodeFactory implements FactoryInterface
     {
         if (is_string($var)) {
             return new StringNode($var);
+        } elseif (is_int($var)) {
+            return new IntNode($var);
         }
 
         // @codeCoverageIgnoreStart
