@@ -7,7 +7,7 @@ namespace Fi1a\VarDumper\Nodes;
 /**
  * Тип строка
  */
-class StringNode extends AbstractNode
+class StringNode extends AbstractNode implements CountableInterface
 {
     /**
      * @inheritDoc
@@ -22,6 +22,14 @@ class StringNode extends AbstractNode
      */
     public function getValue()
     {
-        return $this->value;
+        return (string) $this->value;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getCount(): int
+    {
+        return mb_strlen((string) $this->value);
     }
 }

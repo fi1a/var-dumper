@@ -30,4 +30,13 @@ class StringNodeTest extends TestCase
         $node = new StringNode('string');
         $this->assertEquals('string', $node->getValue());
     }
+
+    /**
+     * Кол-во
+     */
+    public function testCount(): void
+    {
+        $node = new StringNode('string');
+        $this->assertEquals(6, $node->getCount());
+    }
 }

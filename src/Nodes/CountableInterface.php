@@ -11,8 +11,6 @@ interface CountableInterface
 {
     /**
      * Возвращает кол-во элементов массива или длину строки
-     *
-     * @return int|false
      */
-    public function getCount();
+    public function getCount(): int;
 }
