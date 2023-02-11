@@ -21,3 +21,7 @@
 .var-dumper-float {
     color: #6698f8;
 }
+
+.var-dumper-bool {
+    color: #e566f8;
+}
