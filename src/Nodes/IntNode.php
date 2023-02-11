@@ -5,23 +5,23 @@ declare(strict_types=1);
 namespace Fi1a\VarDumper\Nodes;
 
 /**
- * Тип строка
+ * Тип int
  */
-class StringNode extends AbstractNode implements CountableInterface
+class IntNode extends AbstractNode
 {
     /**
      * @inheritDoc
      */
     public function getType(): string
     {
-        return self::TYPE_STRING;
+        return self::TYPE_INT;
     }
 
     /**
      * @inheritDoc
      */
-    public function getCount(): int
+    public function getValue(): string
     {
-        return mb_strlen((string) $this->value);
+        return $this->value === 0 ? '0' : (string) $this->value;
     }
 }

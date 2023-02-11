@@ -13,6 +13,18 @@ use PHPUnit\Framework\TestCase;
  */
 class HtmlHandlerTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        ob_start();
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        ob_end_clean();
+    }
+
     /**
      * Вывод строки
      */
@@ -30,17 +42,32 @@ class HtmlHandlerTest extends TestCase
     }
 
     /**
-     * Вывод строки
+     * Вывод int
      */
     public function testHandleInt(): void
     {
         $handler = $this->getMockBuilder(HtmlHandler::class)
-            ->onlyMethods(['handleInt', 'handleCountable', 'addAssets'])
+            ->onlyMethods(['handleInt', 'addAssets'])
             ->getMock();
 
         $handler->expects($this->once())->method('addAssets');
         $handler->expects($this->once())->method('handleInt');
 
         $handler->handle(NodeFactory::factory(100));
+    }
+
+    /**
+     * Вывод float
+     */
+    public function testHandleFloat(): void
+    {
+        $handler = $this->getMockBuilder(HtmlHandler::class)
+            ->onlyMethods(['handleFloat', 'addAssets'])
+            ->getMock();
+
+        $handler->expects($this->once())->method('addAssets');
+        $handler->expects($this->once())->method('handleFloat');
+
+        $handler->handle(NodeFactory::factory(100.1));
     }
 }
