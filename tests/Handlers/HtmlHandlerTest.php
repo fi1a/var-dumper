@@ -85,4 +85,19 @@ class HtmlHandlerTest extends TestCase
 
         $handler->handle(NodeFactory::factory(true));
     }
+
+    /**
+     * Вывод null
+     */
+    public function testHandleNull(): void
+    {
+        $handler = $this->getMockBuilder(HtmlHandler::class)
+            ->onlyMethods(['handleNull', 'addAssets'])
+            ->getMock();
+
+        $handler->expects($this->once())->method('addAssets');
+        $handler->expects($this->once())->method('handleNull');
+
+        $handler->handle(NodeFactory::factory(null));
+    }
 }

@@ -43,6 +43,10 @@ class HtmlHandler implements HandlerInterface
                 $this->handleBool($node);
 
                 break;
+            case NodeInterface::TYPE_NULL:
+                $this->handleNull($node);
+
+                break;
         }
 
         if ($node instanceof CountableInterface) {
@@ -72,6 +76,16 @@ class HtmlHandler implements HandlerInterface
     protected function handleBool(NodeInterface $node): void
     {
         echo '<span class="var-dumper-bool">' . $node->getValue() . '</span>';
+    }
+
+    /**
+     * Вывод null
+     *
+     * @codeCoverageIgnore
+     */
+    protected function handleNull(NodeInterface $node): void
+    {
+        echo '<span class="var-dumper-null">' . $node->getValue() . '</span>';
     }
 
     /**

@@ -19,7 +19,11 @@
 .var-dumper-count,
 .var-dumper-int,
 .var-dumper-float {
-    color: #6698f8;
+    color: #9ac4ff;
+}
+
+.var-dumper-null {
+    color: #2e74ff;
 }
 
 .var-dumper-bool {
