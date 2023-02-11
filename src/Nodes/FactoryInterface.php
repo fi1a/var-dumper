@@ -14,5 +14,5 @@ interface FactoryInterface
      *
      * @param mixed $var
      */
-    public function factory($var): NodeInterface;
+    public static function factory($var): NodeInterface;
 }
