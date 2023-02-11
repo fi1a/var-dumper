@@ -29,6 +29,10 @@ class HtmlHandler implements HandlerInterface
                 $this->handleString($node);
 
                 break;
+            case NodeInterface::TYPE_INT:
+                $this->handleInt($node);
+
+                break;
         }
 
         if ($node instanceof CountableInterface) {
@@ -44,8 +48,16 @@ class HtmlHandler implements HandlerInterface
     protected function handleString(NodeInterface $node): void
     {
         echo '<span class="var-dumper-quotes">"</span>'
-            . '<span class="var-dumper-string">' . (string) $node->getValue() . '</span>'
+            . '<span class="var-dumper-string">' . $node->getValue() . '</span>'
             . '<span class="var-dumper-quotes">"</span>';
+    }
+
+    /**
+     * Вывод int
+     */
+    protected function handleInt(NodeInterface $node): void
+    {
+        echo '<span class="var-dumper-int">' . $node->getValue() . '</span>';
     }
 
     /**

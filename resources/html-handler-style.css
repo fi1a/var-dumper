@@ -4,6 +4,7 @@
 .var-dumper-string {
     color: #11d911;
 }
-.var-dumper-count {
-    color: #6495edff;
+.var-dumper-count,
+.var-dumper-int {
+    color: #4182f8;
 }

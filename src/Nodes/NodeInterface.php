@@ -34,8 +34,6 @@ interface NodeInterface
 
     /**
      * Возвращает значение
-     *
-     * @return mixed
      */
-    public function getValue();
+    public function getValue(): string;
 }

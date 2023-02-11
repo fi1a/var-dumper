@@ -20,7 +20,7 @@ class StringNode extends AbstractNode implements CountableInterface
     /**
      * @inheritDoc
      */
-    public function getValue()
+    public function getValue(): string
     {
         return (string) $this->value;
     }
