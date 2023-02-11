@@ -70,4 +70,19 @@ class HtmlHandlerTest extends TestCase
 
         $handler->handle(NodeFactory::factory(100.1));
     }
+
+    /**
+     * Вывод bool
+     */
+    public function testHandleBool(): void
+    {
+        $handler = $this->getMockBuilder(HtmlHandler::class)
+            ->onlyMethods(['handleBool', 'addAssets'])
+            ->getMock();
+
+        $handler->expects($this->once())->method('addAssets');
+        $handler->expects($this->once())->method('handleBool');
+
+        $handler->handle(NodeFactory::factory(true));
+    }
 }

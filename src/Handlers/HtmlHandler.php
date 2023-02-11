@@ -39,6 +39,10 @@ class HtmlHandler implements HandlerInterface
                 $this->handleFloat($node);
 
                 break;
+            case NodeInterface::TYPE_BOOL:
+                $this->handleBool($node);
+
+                break;
         }
 
         if ($node instanceof CountableInterface) {
@@ -61,7 +65,19 @@ class HtmlHandler implements HandlerInterface
     }
 
     /**
+     * Вывод bool
+     *
+     * @codeCoverageIgnore
+     */
+    protected function handleBool(NodeInterface $node): void
+    {
+        echo '<span class="var-dumper-bool">' . $node->getValue() . '</span>';
+    }
+
+    /**
      * Вывод int
+     *
+     * @codeCoverageIgnore
      */
     protected function handleInt(NodeInterface $node): void
     {
@@ -70,6 +86,8 @@ class HtmlHandler implements HandlerInterface
 
     /**
      * Вывод float
+     *
+     * @codeCoverageIgnore
      */
     protected function handleFloat(NodeInterface $node): void
     {
