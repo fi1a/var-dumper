@@ -13,7 +13,8 @@
   ],
   "require": {
     "php": "^7.3 || ^8",
-    "fi1a/console": "^2.2"
+    "fi1a/console": "^2.2",
+    "fi1a/facade": "dev-master"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.3",

@@ -62,6 +62,14 @@ class HtmlHandler implements HandlerInterface
                 $this->handleArray($node, $indent);
 
                 break;
+            case NodeInterface::TYPE_CALLABLE:
+                $this->handleCallable($node);
+
+                break;
+            case NodeInterface::TYPE_REFLECTION:
+                $this->handleReflection($node, $indent);
+
+                break;
         }
     }
 
@@ -122,6 +130,42 @@ class HtmlHandler implements HandlerInterface
     }
 
     /**
+     * Вывод callable
+     *
+     * @codeCoverageIgnore
+     */
+    protected function handleCallable(NodeInterface $node): void
+    {
+        echo '<span class="var-dumper-callable">' . $node->getValue() . '</span>';
+        echo ' <span class="var-dumper-square">{</span>' . PHP_EOL;
+        if ($node instanceof WithChildsInterface) {
+            /** @var KeyValueInterface $child */
+            foreach ($node->getChilds() as $child) {
+                echo '    ';
+                $this->handleType($child->getValue());
+                echo PHP_EOL;
+            }
+        }
+        echo '<span class="var-dumper-square">}</span>';
+    }
+
+    /**
+     * Замыкания и методы
+     *
+     * @codeCoverageIgnore
+     */
+    protected function handleReflection(NodeInterface $node, int $indent): void
+    {
+        $result = '';
+        $images = explode(PHP_EOL, $node->getValue());
+        foreach ($images as $index => $image) {
+            $result .= ($index > 0 ? str_repeat('    ', $indent + 1) : '')
+                . $image . ($index < count($images) - 1 ? PHP_EOL : '');
+        }
+        echo '<span class="var-dumper-reflection">' . $result . '</span>';
+    }
+
+    /**
      * Вывод кол-ва
      *
      * @codeCoverageIgnore
@@ -136,7 +180,7 @@ class HtmlHandler implements HandlerInterface
      *
      * @codeCoverageIgnore
      */
-    protected function handleArray(NodeInterface $node, int $indent = 0): void
+    protected function handleArray(NodeInterface $node, int $indent): void
     {
         echo '<span class="var-dumper-array">' . $node->getValue() . '</span>';
 
@@ -149,8 +193,11 @@ class HtmlHandler implements HandlerInterface
             /** @var KeyValueInterface $child */
             foreach ($node->getChilds() as $child) {
                 echo str_repeat('    ', $indent + 1);
-                $this->handleType($child->getKey());
-                echo '  <span class="var-dumper-arrow">=></span>  ';
+                $key = $child->getKey();
+                if ($key) {
+                    $this->handleType($key);
+                    echo '  <span class="var-dumper-arrow">=></span>  ';
+                }
                 $this->handleType($child->getValue(), $indent + 1);
                 echo PHP_EOL;
             }

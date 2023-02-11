@@ -16,7 +16,9 @@ class NodeFactory implements FactoryInterface
      */
     public static function factory($var): NodeInterface
     {
-        if (is_string($var)) {
+        if (is_callable($var)) {
+            return new CallableNode($var);
+        } elseif (is_string($var)) {
             return new StringNode($var);
         } elseif (is_int($var)) {
             return new IntNode($var);

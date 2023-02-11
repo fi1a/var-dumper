@@ -24,11 +24,11 @@ class KeyValueCollectionTest extends TestCase
         $this->assertCount(0, $collection);
         $key = new StringNode('key1');
         $value = new IntNode(100);
-        $keyValue = new KeyValue($key, $value);
+        $keyValue = new KeyValue($value, $key);
         $collection[] = $keyValue;
         $key = new StringNode('key2');
         $value = new IntNode(200);
-        $keyValue = new KeyValue($key, $value);
+        $keyValue = new KeyValue($value, $key);
         $collection[] = $keyValue;
         $this->assertCount(2, $collection);
     }
