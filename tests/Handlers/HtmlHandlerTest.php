@@ -36,7 +36,6 @@ class HtmlHandlerTest extends TestCase
 
         $handler->expects($this->once())->method('addAssets');
         $handler->expects($this->once())->method('handleString');
-        $handler->expects($this->once())->method('handleCountable');
 
         $handler->handle(NodeFactory::factory('string'));
     }
@@ -99,5 +98,20 @@ class HtmlHandlerTest extends TestCase
         $handler->expects($this->once())->method('handleNull');
 
         $handler->handle(NodeFactory::factory(null));
+    }
+
+    /**
+     * Вывод array
+     */
+    public function testHandleArray(): void
+    {
+        $handler = $this->getMockBuilder(HtmlHandler::class)
+            ->onlyMethods(['handleArray', 'addAssets'])
+            ->getMock();
+
+        $handler->expects($this->once())->method('addAssets');
+        $handler->expects($this->once())->method('handleArray');
+
+        $handler->handle(NodeFactory::factory([1, 2, 3]));
     }
 }

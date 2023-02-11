@@ -9,6 +9,11 @@ namespace Fi1a\VarDumper\Nodes;
  */
 class StringNode extends AbstractNode implements CountableInterface
 {
+    public function __construct(string $value)
+    {
+        $this->value = $value;
+    }
+
     /**
      * @inheritDoc
      */

@@ -9,6 +9,11 @@ namespace Fi1a\VarDumper\Nodes;
  */
 class FloatNode extends AbstractNode
 {
+    public function __construct(float $value)
+    {
+        $this->value = $value;
+    }
+
     /**
      * @inheritDoc
      */

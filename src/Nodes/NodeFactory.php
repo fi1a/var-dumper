@@ -25,7 +25,9 @@ class NodeFactory implements FactoryInterface
         } elseif (is_bool($var)) {
             return new BoolNode($var);
         } elseif (is_null($var)) {
-            return new NullNode($var);
+            return new NullNode();
+        } elseif (is_array($var)) {
+            return new ArrayNode($var);
         }
 
         // @codeCoverageIgnoreStart

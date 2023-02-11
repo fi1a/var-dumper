@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Fi1a\Unit\VarDumper\Nodes;
 
+use Fi1a\VarDumper\Nodes\ArrayNode;
 use Fi1a\VarDumper\Nodes\BoolNode;
 use Fi1a\VarDumper\Nodes\FloatNode;
 use Fi1a\VarDumper\Nodes\IntNode;
@@ -30,6 +31,7 @@ class NodeFactoryTest extends TestCase
             [FloatNode::class, 100.1],
             [BoolNode::class, true],
             [NullNode::class, null],
+            [ArrayNode::class, [1, 2, 3]],
         ];
     }
 

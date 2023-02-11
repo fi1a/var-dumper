@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace Fi1a\VarDumper\Handlers;
 
 use Fi1a\VarDumper\Nodes\CountableInterface;
+use Fi1a\VarDumper\Nodes\KeyValueInterface;
 use Fi1a\VarDumper\Nodes\NodeInterface;
+use Fi1a\VarDumper\Nodes\WithChildsInterface;
+
+use const PHP_EOL;
 
 /**
  * Html обработчик
@@ -23,9 +27,16 @@ class HtmlHandler implements HandlerInterface
     public function handle(NodeInterface $node): void
     {
         $this->addAssets();
+        echo '<pre class="var-dumper">';
+        $this->handleType($node);
+        echo '</pre>';
+    }
 
-        echo '<div class="var-dumper"><pre>';
-
+    /**
+     * Обработка типа узла
+     */
+    protected function handleType(NodeInterface $node, int $indent = 0): void
+    {
         switch ($node->getType()) {
             case NodeInterface::TYPE_STRING:
                 $this->handleString($node);
@@ -47,13 +58,11 @@ class HtmlHandler implements HandlerInterface
                 $this->handleNull($node);
 
                 break;
-        }
+            case NodeInterface::TYPE_ARRAY:
+                $this->handleArray($node, $indent);
 
-        if ($node instanceof CountableInterface) {
-            $this->handleCountable($node);
+                break;
         }
-
-        echo '</pre></div>';
     }
 
     /**
@@ -66,6 +75,10 @@ class HtmlHandler implements HandlerInterface
         echo '<span class="var-dumper-quotes">"</span>'
             . '<span class="var-dumper-string">' . $node->getValue() . '</span>'
             . '<span class="var-dumper-quotes">"</span>';
+
+        if ($node instanceof CountableInterface) {
+            $this->handleCountable($node);
+        }
     }
 
     /**
@@ -116,6 +129,34 @@ class HtmlHandler implements HandlerInterface
     protected function handleCountable(CountableInterface $node): void
     {
         echo ' <span class="var-dumper-count">(' . $node->getCount() . ')</span>';
+    }
+
+    /**
+     * Вывод array
+     *
+     * @codeCoverageIgnore
+     */
+    protected function handleArray(NodeInterface $node, int $indent = 0): void
+    {
+        echo '<span class="var-dumper-array">' . $node->getValue() . '</span>';
+
+        if ($node instanceof CountableInterface) {
+            $this->handleCountable($node);
+        }
+
+        echo ' <span class="var-dumper-square">[</span>' . PHP_EOL;
+        if ($node instanceof WithChildsInterface) {
+            /** @var KeyValueInterface $child */
+            foreach ($node->getChilds() as $child) {
+                echo str_repeat('    ', $indent + 1);
+                $this->handleType($child->getKey());
+                echo '  <span class="var-dumper-arrow">=></span>  ';
+                $this->handleType($child->getValue(), $indent + 1);
+                echo PHP_EOL;
+            }
+        }
+        echo str_repeat('    ', $indent);
+        echo '<span class="var-dumper-square">]</span>';
     }
 
     /**

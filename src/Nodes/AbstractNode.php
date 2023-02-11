@@ -15,14 +15,6 @@ abstract class AbstractNode implements NodeInterface
     protected $value;
 
     /**
-     * @param mixed $value
-     */
-    public function __construct($value)
-    {
-        $this->value = $value;
-    }
-
-    /**
      * @inheritDoc
      */
     public function getValue(): string

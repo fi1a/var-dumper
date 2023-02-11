@@ -7,7 +7,7 @@ namespace Fi1a\VarDumper\Nodes;
 /**
  * Null
  */
-class NullNode extends AbstractNode
+class NullNode implements NodeInterface
 {
     /**
      * @inheritDoc
