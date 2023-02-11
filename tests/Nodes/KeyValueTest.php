@@ -21,8 +21,19 @@ class KeyValueTest extends TestCase
     {
         $key = new StringNode('key1');
         $value = new IntNode(100);
-        $keyValue = new KeyValue($key, $value);
+        $keyValue = new KeyValue($value, $key);
         $this->assertEquals($key, $keyValue->getKey());
+        $this->assertEquals($value, $keyValue->getValue());
+    }
+
+    /**
+     * Определяет ключ-значение из узлов
+     */
+    public function testKeyNull(): void
+    {
+        $value = new IntNode(100);
+        $keyValue = new KeyValue($value);
+        $this->assertNull($keyValue->getKey());
         $this->assertEquals($value, $keyValue->getValue());
     }
 }

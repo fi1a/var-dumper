@@ -27,6 +27,8 @@ interface NodeInterface
 
     public const TYPE_RESOURCE = 'resource';
 
+    public const TYPE_REFLECTION = 'reflection';
+
     /**
      * Возвращает тип
      */

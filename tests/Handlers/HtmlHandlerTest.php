@@ -6,6 +6,7 @@ namespace Fi1a\Unit\VarDumper\Handlers;
 
 use Fi1a\VarDumper\Handlers\HtmlHandler;
 use Fi1a\VarDumper\Nodes\NodeFactory;
+use Fi1a\VarDumper\Nodes\ReflectionNode;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -31,7 +32,7 @@ class HtmlHandlerTest extends TestCase
     public function testHandleString(): void
     {
         $handler = $this->getMockBuilder(HtmlHandler::class)
-            ->onlyMethods(['handleString', 'handleCountable', 'addAssets'])
+            ->onlyMethods(['handleString', 'addAssets'])
             ->getMock();
 
         $handler->expects($this->once())->method('addAssets');
@@ -113,5 +114,36 @@ class HtmlHandlerTest extends TestCase
         $handler->expects($this->once())->method('handleArray');
 
         $handler->handle(NodeFactory::factory([1, 2, 3]));
+    }
+
+    /**
+     * Вывод callable
+     */
+    public function testHandleCallable(): void
+    {
+        $handler = $this->getMockBuilder(HtmlHandler::class)
+            ->onlyMethods(['handleCallable', 'addAssets'])
+            ->getMock();
+
+        $handler->expects($this->once())->method('addAssets');
+        $handler->expects($this->once())->method('handleCallable');
+
+        $handler->handle(NodeFactory::factory(function () {
+        }));
+    }
+
+    /**
+     * Вывод строки
+     */
+    public function testHandleReflection(): void
+    {
+        $handler = $this->getMockBuilder(HtmlHandler::class)
+            ->onlyMethods(['handleReflection', 'addAssets'])
+            ->getMock();
+
+        $handler->expects($this->once())->method('addAssets');
+        $handler->expects($this->once())->method('handleReflection');
+
+        $handler->handle(new ReflectionNode('string'));
     }
 }

@@ -6,6 +6,7 @@ namespace Fi1a\Unit\VarDumper\Nodes;
 
 use Fi1a\VarDumper\Nodes\ArrayNode;
 use Fi1a\VarDumper\Nodes\BoolNode;
+use Fi1a\VarDumper\Nodes\CallableNode;
 use Fi1a\VarDumper\Nodes\FloatNode;
 use Fi1a\VarDumper\Nodes\IntNode;
 use Fi1a\VarDumper\Nodes\NodeFactory;
@@ -32,6 +33,7 @@ class NodeFactoryTest extends TestCase
             [BoolNode::class, true],
             [NullNode::class, null],
             [ArrayNode::class, [1, 2, 3]],
+            [CallableNode::class, [$this, 'testFactory']],
         ];
     }
 

@@ -57,7 +57,7 @@ class ArrayNode implements NodeInterface, CountableInterface, WithChildsInterfac
          * @var mixed $value
          */
         foreach ($this->value as $key => $value) {
-            $collection[] = new KeyValue(NodeFactory::factory($key), NodeFactory::factory($value));
+            $collection[] = new KeyValue(NodeFactory::factory($value), NodeFactory::factory($key));
         }
 
         return $collection;

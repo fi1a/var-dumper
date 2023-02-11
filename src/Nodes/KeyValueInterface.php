@@ -12,7 +12,7 @@ interface KeyValueInterface
     /**
      * Узел ключа
      */
-    public function getKey(): NodeInterface;
+    public function getKey(): ?NodeInterface;
 
     /**
      * Узел значения

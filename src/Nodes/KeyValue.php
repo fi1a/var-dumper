@@ -10,7 +10,7 @@ namespace Fi1a\VarDumper\Nodes;
 class KeyValue implements KeyValueInterface
 {
     /**
-     * @var NodeInterface
+     * @var NodeInterface|null
      */
     protected $key;
 
@@ -19,16 +19,16 @@ class KeyValue implements KeyValueInterface
      */
     protected $value;
 
-    public function __construct(NodeInterface $key, NodeInterface $value)
+    public function __construct(NodeInterface $value, ?NodeInterface $key = null)
     {
-        $this->key = $key;
         $this->value = $value;
+        $this->key = $key;
     }
 
     /**
      * @inheritDoc
      */
-    public function getKey(): NodeInterface
+    public function getKey(): ?NodeInterface
     {
         return $this->key;
     }
