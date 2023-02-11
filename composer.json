@@ -1,7 +1,7 @@
 {
   "name": "fi1a/var-dumper",
   "type": "library",
-  "description": "Выводит информацию о переменной и оформляет ее",
+  "description": "Выводит и оформляет информацию о переменной",
   "keywords": [],
   "homepage": "https://github.com/fi1a/var-dumper",
   "license": "MIT",
@@ -12,7 +12,8 @@
     }
   ],
   "require": {
-    "php": "^7.3 || ^8"
+    "php": "^7.3 || ^8",
+    "fi1a/console": "^2.2"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.3",
