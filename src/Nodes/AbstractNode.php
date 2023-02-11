@@ -21,4 +21,12 @@ abstract class AbstractNode implements NodeInterface
     {
         $this->value = $value;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getValue(): string
+    {
+        return (string) $this->value;
+    }
 }

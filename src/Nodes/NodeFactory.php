@@ -20,6 +20,8 @@ class NodeFactory implements FactoryInterface
             return new StringNode($var);
         } elseif (is_int($var)) {
             return new IntNode($var);
+        } elseif (is_float($var)) {
+            return new FloatNode($var);
         }
 
         // @codeCoverageIgnoreStart

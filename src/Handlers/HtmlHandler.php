@@ -24,6 +24,8 @@ class HtmlHandler implements HandlerInterface
     {
         $this->addAssets();
 
+        echo '<div class="var-dumper"><pre>';
+
         switch ($node->getType()) {
             case NodeInterface::TYPE_STRING:
                 $this->handleString($node);
@@ -33,11 +35,17 @@ class HtmlHandler implements HandlerInterface
                 $this->handleInt($node);
 
                 break;
+            case NodeInterface::TYPE_FLOAT:
+                $this->handleFloat($node);
+
+                break;
         }
 
         if ($node instanceof CountableInterface) {
             $this->handleCountable($node);
         }
+
+        echo '</pre></div>';
     }
 
     /**
@@ -58,6 +66,14 @@ class HtmlHandler implements HandlerInterface
     protected function handleInt(NodeInterface $node): void
     {
         echo '<span class="var-dumper-int">' . $node->getValue() . '</span>';
+    }
+
+    /**
+     * Вывод float
+     */
+    protected function handleFloat(NodeInterface $node): void
+    {
+        echo '<span class="var-dumper-float">' . $node->getValue() . '</span>';
     }
 
     /**
