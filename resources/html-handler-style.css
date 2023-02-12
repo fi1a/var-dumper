@@ -8,6 +8,7 @@
     color: #ffffff;
     line-height: 1.3;
     overflow-x: auto;
+    border: 1px dashed #fffa1f;
 }
 .var-dumper-quotes,
 .var-dumper-square {
@@ -33,8 +34,7 @@
     color: #e566f8;
 }
 
-.var-dumper-arrow,
-.var-dumper-callplace {
+.var-dumper-arrow {
     color: #ffffff;
 }
 
@@ -44,4 +44,10 @@
 
 .var-dumper-resource {
     color: #ff1f1f;
+}
+
+.var-dumper-call-place {
+    color: #fffa1f;
+    margin-bottom: 10px;
+    display: inline-block;
 }
