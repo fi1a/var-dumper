@@ -168,7 +168,13 @@ class HtmlHandler implements HandlerInterface
     protected function handleCallable(NodeInterface $node, int $indent): void
     {
         echo '<span class="var-dumper-callable">' . $node->getValue() . '</span>';
-        echo ' <span class="var-dumper-square">{</span>' . PHP_EOL;
+        echo ' <span class="var-dumper-square">{</span>';
+        $this->nodeDotts($indent === 0);
+        $this->node($indent === 0);
+        echo '<span class="var-dumper-container '
+            . ($indent === 0 ? 'var-dumper-container-open' : 'var-dumper-container-close')
+            . '">';
+        echo PHP_EOL;
         if ($node instanceof WithChildsInterface) {
             /** @var KeyValueInterface $child */
             foreach ($node->getChilds() as $child) {
@@ -178,6 +184,7 @@ class HtmlHandler implements HandlerInterface
             }
         }
         echo str_repeat('    ', $indent);
+        echo '</span>';
         echo '<span class="var-dumper-square">}</span>';
     }
 
@@ -244,7 +251,13 @@ class HtmlHandler implements HandlerInterface
             $this->handleCountable($node);
         }
 
-        echo ' <span class="var-dumper-square">[</span>' . PHP_EOL;
+        echo ' <span class="var-dumper-square">[</span>';
+        $this->nodeDotts($indent === 0);
+        $this->node($indent === 0);
+        echo '<span class="var-dumper-container '
+            . ($indent === 0 ? 'var-dumper-container-open' : 'var-dumper-container-close')
+            . '">';
+        echo PHP_EOL;
         if ($node instanceof WithChildsInterface) {
             /** @var KeyValueInterface $child */
             foreach ($node->getChilds() as $child) {
@@ -259,7 +272,30 @@ class HtmlHandler implements HandlerInterface
             }
         }
         echo str_repeat('    ', $indent);
+        echo '</span>';
         echo '<span class="var-dumper-square">]</span>';
+    }
+
+    /**
+     * Стрелка для сворачивания/разворачивания
+     *
+     * @codeCoverageIgnore
+     */
+    protected function node(bool $open): void
+    {
+        echo '<span class="var-dumper-node ' . ($open ? 'var-dumper-expanded' : 'var-dumper-collapsed') . '"></span>';
+    }
+
+    /**
+     * Стрелка для сворачивания/разворачивания
+     *
+     * @codeCoverageIgnore
+     */
+    protected function nodeDotts(bool $open): void
+    {
+        echo '<span class="var-dumper-dots '
+            . ($open ? 'var-dumper-expanded' : 'var-dumper-collapsed')
+            . '">...</span>';
     }
 
     /**
@@ -274,6 +310,7 @@ class HtmlHandler implements HandlerInterface
         }
 
         static::$addAssets = true;
-        echo '<style>' . file_get_contents(__DIR__ . '/../../resources/html-handler-style.css') . '</style>';
+        echo '<style>' . file_get_contents(__DIR__ . '/../../resources/html-handler.css') . '</style>';
+        echo '<script>' . file_get_contents(__DIR__ . '/../../resources/html-handler.js') . '</script>';
     }
 }
