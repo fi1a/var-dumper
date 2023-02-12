@@ -14,5 +14,5 @@ interface HandlerInterface
     /**
      * Обработчик
      */
-    public function handle(NodeInterface $node): void;
+    public function handle(NodeInterface $node, ?string $callPlace = null): void;
 }
