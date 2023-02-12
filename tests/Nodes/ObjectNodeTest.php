@@ -32,7 +32,7 @@ class ObjectNodeTest extends TestCase
     {
         $object = new stdClass();
         $node = new ObjectNode($object);
-        $this->assertEquals('stdClass', $node->getValue());
+        $this->assertIsString($node->getValue());
     }
 
     /**

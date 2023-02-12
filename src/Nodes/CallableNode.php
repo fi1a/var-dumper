@@ -82,6 +82,9 @@ class CallableNode implements NodeInterface, WithChildsInterface
                 }
                 $resultParameters .= $parameterType->getName() . ' ';
             }
+            if ($parameter->isPassedByReference()) {
+                $resultParameters .= '&';
+            }
             $resultParameters .= '$' . $parameter->getName();
             if ($parameter->isDefaultValueAvailable()) {
 
