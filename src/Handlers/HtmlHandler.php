@@ -42,7 +42,7 @@ class HtmlHandler implements HandlerInterface
      */
     protected function callPlace(string $callPlace): void
     {
-        echo '<span class="var-dumper-callplace">@@ ' . $callPlace . '</span>' . PHP_EOL;
+        echo '<span class="var-dumper-call-place">@@ ' . $callPlace . '</span>' . PHP_EOL;
     }
 
     /**
