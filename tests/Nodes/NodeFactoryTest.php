@@ -11,6 +11,7 @@ use Fi1a\VarDumper\Nodes\FloatNode;
 use Fi1a\VarDumper\Nodes\IntNode;
 use Fi1a\VarDumper\Nodes\NodeFactory;
 use Fi1a\VarDumper\Nodes\NullNode;
+use Fi1a\VarDumper\Nodes\ObjectNode;
 use Fi1a\VarDumper\Nodes\StringNode;
 use PHPUnit\Framework\TestCase;
 
@@ -34,6 +35,7 @@ class NodeFactoryTest extends TestCase
             [NullNode::class, null],
             [ArrayNode::class, [1, 2, 3]],
             [CallableNode::class, [$this, 'testFactory']],
+            [ObjectNode::class, $this],
         ];
     }
 

@@ -30,6 +30,8 @@ class NodeFactory implements FactoryInterface
             return new NullNode();
         } elseif (is_array($var)) {
             return new ArrayNode($var);
+        } elseif (is_object($var)) {
+            return new ObjectNode($var);
         }
 
         // @codeCoverageIgnoreStart
