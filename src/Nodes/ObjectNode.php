@@ -37,7 +37,7 @@ class ObjectNode implements NodeInterface, WithChildsInterface
     {
         $reflection = new ReflectionClass($this->value);
 
-        return $reflection->getName();
+        return $reflection->getName() . ' [' . spl_object_id($this->value) . ']';
     }
 
     /**
