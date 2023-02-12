@@ -6,6 +6,7 @@ namespace Fi1a\Unit\VarDumper\Handlers;
 
 use Fi1a\VarDumper\Handlers\HtmlHandler;
 use Fi1a\VarDumper\Nodes\NodeFactory;
+use Fi1a\VarDumper\Nodes\ObjectNode;
 use Fi1a\VarDumper\Nodes\ReflectionNode;
 use PHPUnit\Framework\TestCase;
 
@@ -133,7 +134,7 @@ class HtmlHandlerTest extends TestCase
     }
 
     /**
-     * Вывод строки
+     * Вывод reflection
      */
     public function testHandleReflection(): void
     {
@@ -145,5 +146,20 @@ class HtmlHandlerTest extends TestCase
         $handler->expects($this->once())->method('handleReflection');
 
         $handler->handle(new ReflectionNode('string'));
+    }
+
+    /**
+     * Вывод object
+     */
+    public function testHandleObject(): void
+    {
+        $handler = $this->getMockBuilder(HtmlHandler::class)
+            ->onlyMethods(['handleObject', 'addAssets'])
+            ->getMock();
+
+        $handler->expects($this->once())->method('addAssets');
+        $handler->expects($this->once())->method('handleObject');
+
+        $handler->handle(new ObjectNode($this));
     }
 }

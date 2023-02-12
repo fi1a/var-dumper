@@ -63,11 +63,15 @@ class HtmlHandler implements HandlerInterface
 
                 break;
             case NodeInterface::TYPE_CALLABLE:
-                $this->handleCallable($node);
+                $this->handleCallable($node, $indent);
 
                 break;
             case NodeInterface::TYPE_REFLECTION:
                 $this->handleReflection($node, $indent);
+
+                break;
+            case NodeInterface::TYPE_OBJECT:
+                $this->handleObject($node);
 
                 break;
         }
@@ -134,7 +138,7 @@ class HtmlHandler implements HandlerInterface
      *
      * @codeCoverageIgnore
      */
-    protected function handleCallable(NodeInterface $node): void
+    protected function handleCallable(NodeInterface $node, int $indent): void
     {
         echo '<span class="var-dumper-callable">' . $node->getValue() . '</span>';
         echo ' <span class="var-dumper-square">{</span>' . PHP_EOL;
@@ -142,7 +146,32 @@ class HtmlHandler implements HandlerInterface
             /** @var KeyValueInterface $child */
             foreach ($node->getChilds() as $child) {
                 echo '    ';
-                $this->handleType($child->getValue());
+                $this->handleType($child->getValue(), $indent + 1);
+                echo PHP_EOL;
+            }
+        }
+        echo str_repeat('    ', $indent);
+        echo '<span class="var-dumper-square">}</span>';
+    }
+
+    /**
+     * Вывод object
+     *
+     * @codeCoverageIgnore
+     */
+    protected function handleObject(NodeInterface $node): void
+    {
+        echo '<span class="var-dumper-object">' . $node->getValue() . '</span>';
+        echo ' <span class="var-dumper-square">{</span>' . PHP_EOL;
+        if ($node instanceof WithChildsInterface) {
+            /** @var KeyValueInterface $child */
+            foreach ($node->getChilds() as $child) {
+                echo '    ';
+                $keyNode = $child->getKey();
+                if ($keyNode) {
+                    echo $keyNode->getValue() . ': ';
+                }
+                $this->handleType($child->getValue(), 1);
                 echo PHP_EOL;
             }
         }
@@ -159,7 +188,7 @@ class HtmlHandler implements HandlerInterface
         $result = '';
         $images = explode(PHP_EOL, $node->getValue());
         foreach ($images as $index => $image) {
-            $result .= ($index > 0 ? str_repeat('    ', $indent + 1) : '')
+            $result .= ($index > 0 ? str_repeat('    ', $indent + 1) : str_repeat('    ', $indent))
                 . $image . ($index < count($images) - 1 ? PHP_EOL : '');
         }
         echo '<span class="var-dumper-reflection">' . $result . '</span>';

@@ -24,7 +24,8 @@
 
 .var-dumper-null,
 .var-dumper-array,
-.var-dumper-callable {
+.var-dumper-callable,
+.var-dumper-object {
     color: #2e74ff;
 }
 
