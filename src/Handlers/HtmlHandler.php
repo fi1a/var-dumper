@@ -24,12 +24,25 @@ class HtmlHandler implements HandlerInterface
     /**
      * @inheritDoc
      */
-    public function handle(NodeInterface $node): void
+    public function handle(NodeInterface $node, ?string $callPlace = null): void
     {
         $this->addAssets();
         echo '<pre class="var-dumper">';
+        if ($callPlace) {
+            $this->callPlace($callPlace);
+        }
         $this->handleType($node);
         echo '</pre>';
+    }
+
+    /**
+     * Вывод места вызова
+     *
+     * @codeCoverageIgnore
+     */
+    protected function callPlace(string $callPlace): void
+    {
+        echo '<span class="var-dumper-callplace">@@ ' . $callPlace . '</span>' . PHP_EOL;
     }
 
     /**

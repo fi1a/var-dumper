@@ -33,7 +33,8 @@
     color: #e566f8;
 }
 
-.var-dumper-arrow {
+.var-dumper-arrow,
+.var-dumper-callplace {
     color: #ffffff;
 }
 

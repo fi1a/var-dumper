@@ -9,6 +9,7 @@ use Fi1a\VarDumper\Nodes\NodeFactory;
 use Fi1a\VarDumper\Nodes\ObjectNode;
 use Fi1a\VarDumper\Nodes\ReflectionNode;
 use Fi1a\VarDumper\Nodes\ResourceNode;
+use Fi1a\VarDumper\Nodes\StringNode;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -177,5 +178,20 @@ class HtmlHandlerTest extends TestCase
         $handler->expects($this->once())->method('handleResource');
 
         $handler->handle(new ResourceNode(fopen(__FILE__, 'r')));
+    }
+
+    /**
+     * Вывод места вызова
+     */
+    public function testCallPlace(): void
+    {
+        $handler = $this->getMockBuilder(HtmlHandler::class)
+            ->onlyMethods(['callPlace', 'addAssets'])
+            ->getMock();
+
+        $handler->expects($this->once())->method('addAssets');
+        $handler->expects($this->once())->method('callPlace');
+
+        $handler->handle(new StringNode('test'), __FILE__);
     }
 }
