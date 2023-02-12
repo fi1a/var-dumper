@@ -74,6 +74,10 @@ class HtmlHandler implements HandlerInterface
                 $this->handleObject($node);
 
                 break;
+            case NodeInterface::TYPE_RESOURCE:
+                $this->handleResource($node);
+
+                break;
         }
     }
 
@@ -131,6 +135,16 @@ class HtmlHandler implements HandlerInterface
     protected function handleFloat(NodeInterface $node): void
     {
         echo '<span class="var-dumper-float">' . $node->getValue() . '</span>';
+    }
+
+    /**
+     * Вывод resource
+     *
+     * @codeCoverageIgnore
+     */
+    protected function handleResource(NodeInterface $node): void
+    {
+        echo '<span class="var-dumper-resource">' . $node->getValue() . '</span>';
     }
 
     /**

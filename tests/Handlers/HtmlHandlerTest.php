@@ -8,6 +8,7 @@ use Fi1a\VarDumper\Handlers\HtmlHandler;
 use Fi1a\VarDumper\Nodes\NodeFactory;
 use Fi1a\VarDumper\Nodes\ObjectNode;
 use Fi1a\VarDumper\Nodes\ReflectionNode;
+use Fi1a\VarDumper\Nodes\ResourceNode;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -161,5 +162,20 @@ class HtmlHandlerTest extends TestCase
         $handler->expects($this->once())->method('handleObject');
 
         $handler->handle(new ObjectNode($this));
+    }
+
+    /**
+     * Вывод resource
+     */
+    public function testHandleResource(): void
+    {
+        $handler = $this->getMockBuilder(HtmlHandler::class)
+            ->onlyMethods(['handleResource', 'addAssets'])
+            ->getMock();
+
+        $handler->expects($this->once())->method('addAssets');
+        $handler->expects($this->once())->method('handleResource');
+
+        $handler->handle(new ResourceNode(fopen(__FILE__, 'r')));
     }
 }

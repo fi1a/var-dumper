@@ -32,6 +32,8 @@ class NodeFactory implements FactoryInterface
             return new ArrayNode($var);
         } elseif (is_object($var)) {
             return new ObjectNode($var);
+        } elseif (is_resource($var)) {
+            return new ResourceNode($var);
         }
 
         // @codeCoverageIgnoreStart
