@@ -51,3 +51,44 @@
     margin-bottom: 10px;
     display: inline-block;
 }
+
+.var-dumper-node {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    cursor: pointer;
+    display: inline-block;
+    position: absolute;
+    margin: 7px 0 0 10px;
+}
+
+.var-dumper-node.var-dumper-expanded {
+    border-width: 0 5px 5px 5px;
+    border-color: transparent transparent #ffffff transparent;
+}
+
+.var-dumper-node.var-dumper-collapsed {
+    border-width: 5px 5px 0 5px;
+    border-color: #ffffff transparent transparent transparent;
+}
+
+.var-dumper-dots {
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.var-dumper-dots.var-dumper-expanded {
+    display: none;
+}
+
+.var-dumper-dots.var-dumper-collapsed {
+    display: inline;
+}
+
+.var-dumper-container-open {
+    display: inline;
+}
+
+.var-dumper-container-close {
+    display: none;
+}
