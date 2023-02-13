@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Fi1a\VarDumper;
 
 use Fi1a\VarDumper\Handlers\HandlerInterface;
+use Fi1a\VarDumper\Nodes\NestedLevelInterface;
 use Fi1a\VarDumper\Nodes\NodeFactory;
 use Fi1a\VarDumper\Nodes\NodeInterface;
 
@@ -21,10 +22,16 @@ class Dumper implements DumperInterface
     /**
      * @inheritDoc
      */
-    public function dump($var): void
+    public function dump($var, ?int $maxNestedLevel = null): void
     {
+        if ($maxNestedLevel === null) {
+            $maxNestedLevel = 5;
+        }
         $callPlace = $this->getCallPlace();
         $node = NodeFactory::factory($var);
+        if ($node instanceof NestedLevelInterface) {
+            $node->setMaxNestedLevel($maxNestedLevel);
+        }
         foreach ($this->handlers as $handler) {
             $this->handle($handler, $node, $callPlace);
         }

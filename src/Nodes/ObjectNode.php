@@ -10,12 +10,17 @@ use ReflectionObject;
 /**
  * Тип callable
  */
-class ObjectNode implements NodeInterface, WithChildsInterface
+class ObjectNode extends AbstractNestedLevel implements NodeInterface, WithChildsInterface, NestedLevelInterface
 {
     /**
      * @var object
      */
     protected $value;
+
+    /**
+     * @var KeyValueCollectionInterface|null
+     */
+    protected $collection;
 
     public function __construct(object $value)
     {
@@ -45,7 +50,17 @@ class ObjectNode implements NodeInterface, WithChildsInterface
      */
     public function getChilds(): KeyValueCollectionInterface
     {
-        $collection = new KeyValueCollection();
+        if ($this->collection !== null) {
+            return $this->collection;
+        }
+
+        $this->collection = new KeyValueCollection();
+
+        if ($this->nestedLevel > $this->maxNestedLevel) {
+            $this->collection[] = new KeyValue(new ReflectionNode('<...>'));
+
+            return $this->collection;
+        }
 
         $reflection = new ReflectionObject($this->value);
         foreach ($reflection->getProperties() as $property) {
@@ -65,12 +80,19 @@ class ObjectNode implements NodeInterface, WithChildsInterface
             $propertyName .= (!$property->isDefault() ? '"' : '')
                 . $property->getName()
                 . (!$property->isDefault() ? '"' : '');
-            $collection[] = new KeyValue(
-                NodeFactory::factory($property->getValue($this->value)),
+
+            $nodeValue = NodeFactory::factory($property->getValue($this->value));
+            if ($nodeValue instanceof NestedLevelInterface) {
+                $nodeValue->setMaxNestedLevel($this->maxNestedLevel)
+                    ->setNestedLevel($this->nestedLevel + 1);
+            }
+
+            $this->collection[] = new KeyValue(
+                $nodeValue,
                 new StringNode($propertyName)
             );
         }
 
-        return $collection;
+        return $this->collection;
     }
 }

@@ -9,11 +9,11 @@ use Fi1a\VarDumper\DumperInterface;
  *
  * @param mixed $var
  */
-function dump($var): void
+function dump($var, ?int $maxNestedLevel = null): void
 {
     /** @var DumperInterface $dumper */
     $dumper = di()->get(DumperInterface::class);
-    $dumper->dump($var);
+    $dumper->dump($var, $maxNestedLevel);
 }
 
 /**

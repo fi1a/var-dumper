@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Fi1a\Unit\VarDumper\Nodes;
 
 use Fi1a\VarDumper\Nodes\ArrayNode;
+use Fi1a\VarDumper\Nodes\NestedLevelInterface;
 use Fi1a\VarDumper\Nodes\NodeInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -46,6 +47,25 @@ class ArrayNodeTest extends TestCase
     public function testChilds(): void
     {
         $node = new ArrayNode([1, 2, 3]);
-        $this->assertCount(3, $node->getChilds());
+        $collection = $node->getChilds();
+        $this->assertCount(3, $collection);
+        $this->assertEquals($collection, $node->getChilds());
+    }
+
+    /**
+     * Максимальный уровень вложенности
+     */
+    public function testMaxNestedLevel(): void
+    {
+        $array = [];
+        $array[] = &$array;
+        $node = new ArrayNode($array);
+        $node->setMaxNestedLevel(5);
+
+        do {
+            $childs = $node->getChilds();
+            $this->assertCount(1, $childs);
+            $node = $childs->first()->getValue();
+        } while ($node instanceof NestedLevelInterface);
     }
 }

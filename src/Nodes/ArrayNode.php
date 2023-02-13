@@ -7,12 +7,21 @@ namespace Fi1a\VarDumper\Nodes;
 /**
  * Тип array
  */
-class ArrayNode implements NodeInterface, CountableInterface, WithChildsInterface
+class ArrayNode extends AbstractNestedLevel implements
+    NodeInterface,
+    CountableInterface,
+    WithChildsInterface,
+    NestedLevelInterface
 {
     /**
      * @var array<array-key, mixed>
      */
     protected $value;
+
+    /**
+     * @var KeyValueCollectionInterface|null
+     */
+    protected $collection;
 
     /**
      * @param array<array-key, mixed> $value
@@ -51,15 +60,31 @@ class ArrayNode implements NodeInterface, CountableInterface, WithChildsInterfac
      */
     public function getChilds(): KeyValueCollectionInterface
     {
-        $collection = new KeyValueCollection();
+        if ($this->collection !== null) {
+            return $this->collection;
+        }
+
+        $this->collection = new KeyValueCollection();
+
+        if ($this->nestedLevel > $this->maxNestedLevel) {
+            $this->collection[] = new KeyValue(new ReflectionNode('<...>'));
+
+            return $this->collection;
+        }
+
         /**
          * @var mixed $key
          * @var mixed $value
          */
         foreach ($this->value as $key => $value) {
-            $collection[] = new KeyValue(NodeFactory::factory($value), NodeFactory::factory($key));
+            $nodeValue = NodeFactory::factory($value);
+            if ($nodeValue instanceof NestedLevelInterface) {
+                $nodeValue->setMaxNestedLevel($this->maxNestedLevel)
+                    ->setNestedLevel($this->nestedLevel + 1);
+            }
+            $this->collection[] = new KeyValue($nodeValue, NodeFactory::factory($key));
         }
 
-        return $collection;
+        return $this->collection;
     }
 }

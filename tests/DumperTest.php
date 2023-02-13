@@ -35,6 +35,22 @@ class DumperTest extends TestCase
     }
 
     /**
+     * Устанавливает максимальную вложенность
+     */
+    public function testSetMaxNestedLevel(): void
+    {
+        $dumper = $this->getMockBuilder(Dumper::class)
+            ->onlyMethods(['handle'])
+            ->getMock();
+
+        $dumper->pushHandler(new HtmlHandler());
+
+        $dumper->expects($this->once())->method('handle');
+
+        $dumper->dump([0 => [0 => [0 => [0 => [0 => [0 => [0 => [0 => [0 => []]]]]]]]]]);
+    }
+
+    /**
      * Обработчики
      */
     public function testHandlers(): void
