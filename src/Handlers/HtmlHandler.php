@@ -222,8 +222,10 @@ class HtmlHandler implements HandlerInterface
         $result = '';
         $images = explode(PHP_EOL, $node->getValue());
         foreach ($images as $index => $image) {
-            $result .= ($index > 0 ? str_repeat('    ', $indent + 1) : str_repeat('    ', $indent))
-                . $image . ($index < count($images) - 1 ? PHP_EOL : '');
+            if (count($images) > 1) {
+                $result .= $index > 0 ? str_repeat('    ', $indent + 1) : str_repeat('    ', $indent);
+            }
+            $result .= $image . ($index < count($images) - 1 ? PHP_EOL : '');
         }
         echo '<span class="vd-reflection">' . $result . '</span>';
     }

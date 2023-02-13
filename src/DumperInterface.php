@@ -16,7 +16,7 @@ interface DumperInterface
      *
      * @param mixed $var
      */
-    public function dump($var): void;
+    public function dump($var, ?int $maxNestedLevel = null): void;
 
     /**
      * Добавить обработчик
