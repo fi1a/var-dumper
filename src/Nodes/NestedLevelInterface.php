@@ -10,16 +10,7 @@ namespace Fi1a\VarDumper\Nodes;
 interface NestedLevelInterface
 {
     /**
-     *  Максимальный уровень вложенности
-     *
-     * @return $this
-     */
-    public function setMaxNestedLevel(int $maxNestedLevel);
-
-    /**
      * Уровень вложенности
-     *
-     * @return $this
      */
-    public function setNestedLevel(int $nestedLevel);
+    public function setNestedLevel(int $nestedLevel): void;
 }

@@ -7,6 +7,7 @@ namespace Fi1a\Unit\VarDumper\Nodes;
 use Fi1a\VarDumper\Nodes\ArrayNode;
 use Fi1a\VarDumper\Nodes\NestedLevelInterface;
 use Fi1a\VarDumper\Nodes\NodeInterface;
+use Fi1a\VarDumper\Nodes\Options;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,7 +20,7 @@ class ArrayNodeTest extends TestCase
      */
     public function testType(): void
     {
-        $node = new ArrayNode([]);
+        $node = new ArrayNode([], new Options());
         $this->assertEquals(NodeInterface::TYPE_ARRAY, $node->getType());
     }
 
@@ -28,7 +29,7 @@ class ArrayNodeTest extends TestCase
      */
     public function testValue(): void
     {
-        $node = new ArrayNode([]);
+        $node = new ArrayNode([], new Options());
         $this->assertEquals('array', $node->getValue());
     }
 
@@ -37,7 +38,7 @@ class ArrayNodeTest extends TestCase
      */
     public function testCount(): void
     {
-        $node = new ArrayNode([1, 2, 3]);
+        $node = new ArrayNode([1, 2, 3], new Options());
         $this->assertEquals(3, $node->getCount());
     }
 
@@ -46,9 +47,22 @@ class ArrayNodeTest extends TestCase
      */
     public function testChilds(): void
     {
-        $node = new ArrayNode([1, 2, 3]);
+        $node = new ArrayNode([1, 2, 3], new Options());
         $collection = $node->getChilds();
         $this->assertCount(3, $collection);
+        $this->assertEquals($collection, $node->getChilds());
+    }
+
+    /**
+     * Максимальное кол-во элементов
+     */
+    public function testMaxCount(): void
+    {
+        $options = new Options();
+        $options->setMaxCount(1);
+        $node = new ArrayNode([1, 2, 3], $options);
+        $collection = $node->getChilds();
+        $this->assertCount(2, $collection);
         $this->assertEquals($collection, $node->getChilds());
     }
 
@@ -59,8 +73,7 @@ class ArrayNodeTest extends TestCase
     {
         $array = [];
         $array[] = &$array;
-        $node = new ArrayNode($array);
-        $node->setMaxNestedLevel(5);
+        $node = new ArrayNode($array, new Options());
 
         do {
             $childs = $node->getChilds();

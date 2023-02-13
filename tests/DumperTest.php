@@ -8,6 +8,7 @@ use Fi1a\DI\Builder;
 use Fi1a\VarDumper\Dumper;
 use Fi1a\VarDumper\DumperInterface;
 use Fi1a\VarDumper\Handlers\HtmlHandler;
+use Fi1a\VarDumper\Nodes\Options;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -31,7 +32,7 @@ class DumperTest extends TestCase
 
         $dumper->expects($this->exactly(2))->method('handle');
 
-        $dumper->dump('string');
+        $dumper->dump('string', new Options());
     }
 
     /**
@@ -47,7 +48,7 @@ class DumperTest extends TestCase
 
         $dumper->expects($this->once())->method('handle');
 
-        $dumper->dump([0 => [0 => [0 => [0 => [0 => [0 => [0 => [0 => [0 => []]]]]]]]]]);
+        $dumper->dump([0 => [0 => [0 => [0 => [0 => [0 => [0 => [0 => [0 => []]]]]]]]]], new Options());
     }
 
     /**
@@ -64,9 +65,9 @@ class DumperTest extends TestCase
 
         $dumper->expects($this->exactly(2))->method('handle');
 
-        $dumper->dump('string');
+        $dumper->dump('string', new Options());
         $dumper->clearHandlers();
-        $dumper->dump('string');
+        $dumper->dump('string', new Options());
     }
 
     /**

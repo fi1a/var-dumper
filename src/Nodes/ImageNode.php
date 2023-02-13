@@ -7,7 +7,7 @@ namespace Fi1a\VarDumper\Nodes;
 /**
  * Тип reflection
  */
-class ReflectionNode extends AbstractNode
+class ImageNode extends AbstractNode
 {
     public function __construct(string $value)
     {

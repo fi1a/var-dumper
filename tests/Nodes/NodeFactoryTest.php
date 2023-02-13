@@ -12,6 +12,7 @@ use Fi1a\VarDumper\Nodes\IntNode;
 use Fi1a\VarDumper\Nodes\NodeFactory;
 use Fi1a\VarDumper\Nodes\NullNode;
 use Fi1a\VarDumper\Nodes\ObjectNode;
+use Fi1a\VarDumper\Nodes\Options;
 use Fi1a\VarDumper\Nodes\ResourceNode;
 use Fi1a\VarDumper\Nodes\StringNode;
 use PHPUnit\Framework\TestCase;
@@ -50,6 +51,6 @@ class NodeFactoryTest extends TestCase
      */
     public function testFactory(string $expected, $var): void
     {
-        $this->assertInstanceOf($expected, NodeFactory::factory($var));
+        $this->assertInstanceOf($expected, NodeFactory::factory($var, new Options()));
     }
 }

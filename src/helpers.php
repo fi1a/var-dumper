@@ -3,17 +3,20 @@
 declare(strict_types=1);
 
 use Fi1a\VarDumper\DumperInterface;
+use Fi1a\VarDumper\Nodes\OptionsInterface;
 
 /**
  * Выводит и оформляет информацию о переменной
  *
  * @param mixed $var
  */
-function dump($var, ?int $maxNestedLevel = null): void
+function dump($var): void
 {
     /** @var DumperInterface $dumper */
     $dumper = di()->get(DumperInterface::class);
-    $dumper->dump($var, $maxNestedLevel);
+    /** @var OptionsInterface $options */
+    $options = di()->get(OptionsInterface::class);
+    $dumper->dump($var, $options);
 }
 
 /**
