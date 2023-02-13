@@ -1,4 +1,4 @@
-.var-dumper {
+.vd {
     font-family: Arial, serif;
     font-size: 11pt;
     font-weight: normal;
@@ -10,49 +10,49 @@
     overflow-x: auto;
     border: 1px dashed #fffa1f;
 }
-.var-dumper-quotes,
-.var-dumper-square {
+.vd-quotes,
+.vd-square {
     color: #e76f0a;
 }
-.var-dumper-string {
+.vd-string {
     color: #11d911;
 }
-.var-dumper-count,
-.var-dumper-int,
-.var-dumper-float {
+.vd-count,
+.vd-int,
+.vd-float {
     color: #9ac4ff;
 }
 
-.var-dumper-null,
-.var-dumper-array,
-.var-dumper-callable,
-.var-dumper-object {
+.vd-null,
+.vd-array,
+.vd-callable,
+.vd-object {
     color: #2e74ff;
 }
 
-.var-dumper-bool {
+.vd-bool {
     color: #e566f8;
 }
 
-.var-dumper-arrow {
+.vd-arrow {
     color: #ffffff;
 }
 
-.var-dumper-reflection {
+.vd-reflection {
     color: #fffa1f;
 }
 
-.var-dumper-resource {
+.vd-resource {
     color: #ff1f1f;
 }
 
-.var-dumper-call-place {
+.vd-call-place {
     color: #fffa1f;
     margin-bottom: 10px;
     display: inline-block;
 }
 
-.var-dumper-node {
+.vd-node {
     width: 0;
     height: 0;
     border-style: solid;
@@ -62,33 +62,33 @@
     margin: 7px 0 0 10px;
 }
 
-.var-dumper-node.var-dumper-expanded {
+.vd-node.vd-expanded {
     border-width: 0 5px 5px 5px;
     border-color: transparent transparent #ffffff transparent;
 }
 
-.var-dumper-node.var-dumper-collapsed {
+.vd-node.vd-collapsed {
     border-width: 5px 5px 0 5px;
     border-color: #ffffff transparent transparent transparent;
 }
 
-.var-dumper-dots {
+.vd-dots {
     color: #ffffff;
     cursor: pointer;
 }
 
-.var-dumper-dots.var-dumper-expanded {
+.vd-dots.vd-expanded {
     display: none;
 }
 
-.var-dumper-dots.var-dumper-collapsed {
+.vd-dots.vd-collapsed {
     display: inline;
 }
 
-.var-dumper-container-open {
+.vd-container-open {
     display: inline;
 }
 
-.var-dumper-container-close {
+.vd-container-close {
     display: none;
 }

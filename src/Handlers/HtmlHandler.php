@@ -27,7 +27,7 @@ class HtmlHandler implements HandlerInterface
     public function handle(NodeInterface $node, ?string $callPlace = null): void
     {
         $this->addAssets();
-        echo '<pre class="var-dumper">';
+        echo '<pre class="vd">';
         if ($callPlace) {
             $this->callPlace($callPlace);
         }
@@ -42,7 +42,7 @@ class HtmlHandler implements HandlerInterface
      */
     protected function callPlace(string $callPlace): void
     {
-        echo '<span class="var-dumper-call-place">@@ ' . $callPlace . '</span>' . PHP_EOL;
+        echo '<span class="vd-call-place">@@ ' . $callPlace . '</span>' . PHP_EOL;
     }
 
     /**
@@ -101,9 +101,9 @@ class HtmlHandler implements HandlerInterface
      */
     protected function handleString(NodeInterface $node): void
     {
-        echo '<span class="var-dumper-quotes">"</span>'
-            . '<span class="var-dumper-string">' . $node->getValue() . '</span>'
-            . '<span class="var-dumper-quotes">"</span>';
+        echo '<span class="vd-quotes">"</span>'
+            . '<span class="vd-string">' . $node->getValue() . '</span>'
+            . '<span class="vd-quotes">"</span>';
 
         if ($node instanceof CountableInterface) {
             $this->handleCountable($node);
@@ -117,7 +117,7 @@ class HtmlHandler implements HandlerInterface
      */
     protected function handleBool(NodeInterface $node): void
     {
-        echo '<span class="var-dumper-bool">' . $node->getValue() . '</span>';
+        echo '<span class="vd-bool">' . $node->getValue() . '</span>';
     }
 
     /**
@@ -127,7 +127,7 @@ class HtmlHandler implements HandlerInterface
      */
     protected function handleNull(NodeInterface $node): void
     {
-        echo '<span class="var-dumper-null">' . $node->getValue() . '</span>';
+        echo '<span class="vd-null">' . $node->getValue() . '</span>';
     }
 
     /**
@@ -137,7 +137,7 @@ class HtmlHandler implements HandlerInterface
      */
     protected function handleInt(NodeInterface $node): void
     {
-        echo '<span class="var-dumper-int">' . $node->getValue() . '</span>';
+        echo '<span class="vd-int">' . $node->getValue() . '</span>';
     }
 
     /**
@@ -147,7 +147,7 @@ class HtmlHandler implements HandlerInterface
      */
     protected function handleFloat(NodeInterface $node): void
     {
-        echo '<span class="var-dumper-float">' . $node->getValue() . '</span>';
+        echo '<span class="vd-float">' . $node->getValue() . '</span>';
     }
 
     /**
@@ -157,7 +157,7 @@ class HtmlHandler implements HandlerInterface
      */
     protected function handleResource(NodeInterface $node): void
     {
-        echo '<span class="var-dumper-resource">' . $node->getValue() . '</span>';
+        echo '<span class="vd-resource">' . $node->getValue() . '</span>';
     }
 
     /**
@@ -167,12 +167,12 @@ class HtmlHandler implements HandlerInterface
      */
     protected function handleCallable(NodeInterface $node, int $indent): void
     {
-        echo '<span class="var-dumper-callable">' . $node->getValue() . '</span>';
-        echo ' <span class="var-dumper-square">{</span>';
+        echo '<span class="vd-callable">' . $node->getValue() . '</span>';
+        echo ' <span class="vd-square">{</span>';
         $this->nodeDotts($indent === 0);
         $this->node($indent === 0);
-        echo '<span class="var-dumper-container '
-            . ($indent === 0 ? 'var-dumper-container-open' : 'var-dumper-container-close')
+        echo '<span class="vd-container '
+            . ($indent === 0 ? 'vd-container-open' : 'vd-container-close')
             . '">';
         echo PHP_EOL;
         if ($node instanceof WithChildsInterface) {
@@ -185,7 +185,7 @@ class HtmlHandler implements HandlerInterface
         }
         echo str_repeat('    ', $indent);
         echo '</span>';
-        echo '<span class="var-dumper-square">}</span>';
+        echo '<span class="vd-square">}</span>';
     }
 
     /**
@@ -195,8 +195,8 @@ class HtmlHandler implements HandlerInterface
      */
     protected function handleObject(NodeInterface $node): void
     {
-        echo '<span class="var-dumper-object">' . $node->getValue() . '</span>';
-        echo ' <span class="var-dumper-square">{</span>' . PHP_EOL;
+        echo '<span class="vd-object">' . $node->getValue() . '</span>';
+        echo ' <span class="vd-square">{</span>' . PHP_EOL;
         if ($node instanceof WithChildsInterface) {
             /** @var KeyValueInterface $child */
             foreach ($node->getChilds() as $child) {
@@ -209,7 +209,7 @@ class HtmlHandler implements HandlerInterface
                 echo PHP_EOL;
             }
         }
-        echo '<span class="var-dumper-square">}</span>';
+        echo '<span class="vd-square">}</span>';
     }
 
     /**
@@ -225,7 +225,7 @@ class HtmlHandler implements HandlerInterface
             $result .= ($index > 0 ? str_repeat('    ', $indent + 1) : str_repeat('    ', $indent))
                 . $image . ($index < count($images) - 1 ? PHP_EOL : '');
         }
-        echo '<span class="var-dumper-reflection">' . $result . '</span>';
+        echo '<span class="vd-reflection">' . $result . '</span>';
     }
 
     /**
@@ -235,7 +235,7 @@ class HtmlHandler implements HandlerInterface
      */
     protected function handleCountable(CountableInterface $node): void
     {
-        echo ' <span class="var-dumper-count">(' . $node->getCount() . ')</span>';
+        echo ' <span class="vd-count">(' . $node->getCount() . ')</span>';
     }
 
     /**
@@ -245,17 +245,17 @@ class HtmlHandler implements HandlerInterface
      */
     protected function handleArray(NodeInterface $node, int $indent): void
     {
-        echo '<span class="var-dumper-array">' . $node->getValue() . '</span>';
+        echo '<span class="vd-array">' . $node->getValue() . '</span>';
 
         if ($node instanceof CountableInterface) {
             $this->handleCountable($node);
         }
 
-        echo ' <span class="var-dumper-square">[</span>';
+        echo ' <span class="vd-square">[</span>';
         $this->nodeDotts($indent === 0);
         $this->node($indent === 0);
-        echo '<span class="var-dumper-container '
-            . ($indent === 0 ? 'var-dumper-container-open' : 'var-dumper-container-close')
+        echo '<span class="vd-container '
+            . ($indent === 0 ? 'vd-container-open' : 'vd-container-close')
             . '">';
         echo PHP_EOL;
         if ($node instanceof WithChildsInterface) {
@@ -265,7 +265,7 @@ class HtmlHandler implements HandlerInterface
                 $key = $child->getKey();
                 if ($key) {
                     $this->handleType($key);
-                    echo '  <span class="var-dumper-arrow">=></span>  ';
+                    echo '  <span class="vd-arrow">=></span>  ';
                 }
                 $this->handleType($child->getValue(), $indent + 1);
                 echo PHP_EOL;
@@ -273,7 +273,7 @@ class HtmlHandler implements HandlerInterface
         }
         echo str_repeat('    ', $indent);
         echo '</span>';
-        echo '<span class="var-dumper-square">]</span>';
+        echo '<span class="vd-square">]</span>';
     }
 
     /**
@@ -283,7 +283,7 @@ class HtmlHandler implements HandlerInterface
      */
     protected function node(bool $open): void
     {
-        echo '<span class="var-dumper-node ' . ($open ? 'var-dumper-expanded' : 'var-dumper-collapsed') . '"></span>';
+        echo '<span class="vd-node ' . ($open ? 'vd-expanded' : 'vd-collapsed') . '"></span>';
     }
 
     /**
@@ -293,8 +293,8 @@ class HtmlHandler implements HandlerInterface
      */
     protected function nodeDotts(bool $open): void
     {
-        echo '<span class="var-dumper-dots '
-            . ($open ? 'var-dumper-expanded' : 'var-dumper-collapsed')
+        echo '<span class="vd-dots '
+            . ($open ? 'vd-expanded' : 'vd-collapsed')
             . '">...</span>';
     }
 
