@@ -6,6 +6,7 @@ namespace Fi1a\Unit\VarDumper\Nodes;
 
 use Fi1a\VarDumper\Nodes\IntNode;
 use Fi1a\VarDumper\Nodes\KeyValue;
+use Fi1a\VarDumper\Nodes\Options;
 use Fi1a\VarDumper\Nodes\StringNode;
 use PHPUnit\Framework\TestCase;
 
@@ -19,7 +20,7 @@ class KeyValueTest extends TestCase
      */
     public function testKeyValue(): void
     {
-        $key = new StringNode('key1');
+        $key = new StringNode('key1', new Options());
         $value = new IntNode(100);
         $keyValue = new KeyValue($value, $key);
         $this->assertEquals($key, $keyValue->getKey());

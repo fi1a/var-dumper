@@ -6,6 +6,8 @@ use Fi1a\DI\Builder;
 use Fi1a\VarDumper\Dumper;
 use Fi1a\VarDumper\DumperInterface;
 use Fi1a\VarDumper\Handlers\HtmlHandler;
+use Fi1a\VarDumper\Nodes\Options;
+use Fi1a\VarDumper\Nodes\OptionsInterface;
 
 di()->config()->addDefinition(
     Builder::build(DumperInterface::class)
@@ -19,5 +21,11 @@ di()->config()->addDefinition(
 
             return $dumper;
         })
+    ->getDefinition()
+);
+
+di()->config()->addDefinition(
+    Builder::build(OptionsInterface::class)
+    ->defineClass(Options::class)
     ->getDefinition()
 );

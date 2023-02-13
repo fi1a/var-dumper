@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Fi1a\Unit\VarDumper\Handlers;
 
 use Fi1a\VarDumper\Handlers\HtmlHandler;
+use Fi1a\VarDumper\Nodes\ImageNode;
 use Fi1a\VarDumper\Nodes\NodeFactory;
 use Fi1a\VarDumper\Nodes\ObjectNode;
-use Fi1a\VarDumper\Nodes\ReflectionNode;
+use Fi1a\VarDumper\Nodes\Options;
 use Fi1a\VarDumper\Nodes\ResourceNode;
 use Fi1a\VarDumper\Nodes\StringNode;
 use PHPUnit\Framework\TestCase;
@@ -41,7 +42,7 @@ class HtmlHandlerTest extends TestCase
         $handler->expects($this->once())->method('addAssets');
         $handler->expects($this->once())->method('handleString');
 
-        $handler->handle(NodeFactory::factory('string'));
+        $handler->handle(NodeFactory::factory('string', new Options()));
     }
 
     /**
@@ -56,7 +57,7 @@ class HtmlHandlerTest extends TestCase
         $handler->expects($this->once())->method('addAssets');
         $handler->expects($this->once())->method('handleInt');
 
-        $handler->handle(NodeFactory::factory(100));
+        $handler->handle(NodeFactory::factory(100, new Options()));
     }
 
     /**
@@ -71,7 +72,7 @@ class HtmlHandlerTest extends TestCase
         $handler->expects($this->once())->method('addAssets');
         $handler->expects($this->once())->method('handleFloat');
 
-        $handler->handle(NodeFactory::factory(100.1));
+        $handler->handle(NodeFactory::factory(100.1, new Options()));
     }
 
     /**
@@ -86,7 +87,7 @@ class HtmlHandlerTest extends TestCase
         $handler->expects($this->once())->method('addAssets');
         $handler->expects($this->once())->method('handleBool');
 
-        $handler->handle(NodeFactory::factory(true));
+        $handler->handle(NodeFactory::factory(true, new Options()));
     }
 
     /**
@@ -101,7 +102,7 @@ class HtmlHandlerTest extends TestCase
         $handler->expects($this->once())->method('addAssets');
         $handler->expects($this->once())->method('handleNull');
 
-        $handler->handle(NodeFactory::factory(null));
+        $handler->handle(NodeFactory::factory(null, new Options()));
     }
 
     /**
@@ -116,7 +117,7 @@ class HtmlHandlerTest extends TestCase
         $handler->expects($this->once())->method('addAssets');
         $handler->expects($this->once())->method('handleArray');
 
-        $handler->handle(NodeFactory::factory([1, 2, 3]));
+        $handler->handle(NodeFactory::factory([1, 2, 3], new Options()));
     }
 
     /**
@@ -132,7 +133,7 @@ class HtmlHandlerTest extends TestCase
         $handler->expects($this->once())->method('handleCallable');
 
         $handler->handle(NodeFactory::factory(function () {
-        }));
+        }, new Options()));
     }
 
     /**
@@ -141,13 +142,13 @@ class HtmlHandlerTest extends TestCase
     public function testHandleReflection(): void
     {
         $handler = $this->getMockBuilder(HtmlHandler::class)
-            ->onlyMethods(['handleReflection', 'addAssets'])
+            ->onlyMethods(['handleImage', 'addAssets'])
             ->getMock();
 
         $handler->expects($this->once())->method('addAssets');
-        $handler->expects($this->once())->method('handleReflection');
+        $handler->expects($this->once())->method('handleImage');
 
-        $handler->handle(new ReflectionNode('string'));
+        $handler->handle(new ImageNode('string'));
     }
 
     /**
@@ -162,7 +163,7 @@ class HtmlHandlerTest extends TestCase
         $handler->expects($this->once())->method('addAssets');
         $handler->expects($this->once())->method('handleObject');
 
-        $handler->handle(new ObjectNode($this));
+        $handler->handle(new ObjectNode($this, new Options()));
     }
 
     /**
@@ -192,6 +193,6 @@ class HtmlHandlerTest extends TestCase
         $handler->expects($this->once())->method('addAssets');
         $handler->expects($this->once())->method('callPlace');
 
-        $handler->handle(new StringNode('test'), __FILE__);
+        $handler->handle(new StringNode('test', new Options()), __FILE__);
     }
 }

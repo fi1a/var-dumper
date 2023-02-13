@@ -8,6 +8,7 @@ use Fi1a\Unit\VarDumper\Fixtures\ClassFoo;
 use Fi1a\VarDumper\Nodes\NestedLevelInterface;
 use Fi1a\VarDumper\Nodes\NodeInterface;
 use Fi1a\VarDumper\Nodes\ObjectNode;
+use Fi1a\VarDumper\Nodes\Options;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -22,7 +23,7 @@ class ObjectNodeTest extends TestCase
     public function testType(): void
     {
         $object = new stdClass();
-        $node = new ObjectNode($object);
+        $node = new ObjectNode($object, new Options());
         $this->assertEquals(NodeInterface::TYPE_OBJECT, $node->getType());
     }
 
@@ -32,7 +33,7 @@ class ObjectNodeTest extends TestCase
     public function testValue(): void
     {
         $object = new stdClass();
-        $node = new ObjectNode($object);
+        $node = new ObjectNode($object, new Options());
         $this->assertIsString($node->getValue());
     }
 
@@ -43,7 +44,7 @@ class ObjectNodeTest extends TestCase
     {
         $object = new ClassFoo();
         $object->dynA = 'string';
-        $node = new ObjectNode($object);
+        $node = new ObjectNode($object, new Options());
         $collection = $node->getChilds();
         $this->assertCount(8, $collection);
         $this->assertEquals($collection, $node->getChilds());
@@ -56,8 +57,7 @@ class ObjectNodeTest extends TestCase
     {
         $object = new stdClass();
         $object->object = &$object;
-        $node = new ObjectNode($object);
-        $node->setMaxNestedLevel(5);
+        $node = new ObjectNode($object, new Options());
 
         do {
             $childs = $node->getChilds();

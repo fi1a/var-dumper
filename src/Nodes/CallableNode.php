@@ -48,7 +48,7 @@ class CallableNode implements NodeInterface, WithChildsInterface
     {
         $collection = new KeyValueCollection();
 
-        $collection[] = new KeyValue(new ReflectionNode($this->getImage()));
+        $collection[] = new KeyValue(new ImageNode($this->getImage()));
 
         return $collection;
     }

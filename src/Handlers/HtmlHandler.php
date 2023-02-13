@@ -80,7 +80,7 @@ class HtmlHandler implements HandlerInterface
 
                 break;
             case NodeInterface::TYPE_REFLECTION:
-                $this->handleReflection($node, $indent);
+                $this->handleImage($node, $indent);
 
                 break;
             case NodeInterface::TYPE_OBJECT:
@@ -217,7 +217,7 @@ class HtmlHandler implements HandlerInterface
      *
      * @codeCoverageIgnore
      */
-    protected function handleReflection(NodeInterface $node, int $indent): void
+    protected function handleImage(NodeInterface $node, int $indent): void
     {
         $result = '';
         $images = explode(PHP_EOL, $node->getValue());

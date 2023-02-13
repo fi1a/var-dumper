@@ -10,7 +10,7 @@ use ReflectionObject;
 /**
  * Тип callable
  */
-class ObjectNode extends AbstractNestedLevel implements NodeInterface, WithChildsInterface, NestedLevelInterface
+class ObjectNode implements NodeInterface, WithChildsInterface, NestedLevelInterface
 {
     /**
      * @var object
@@ -22,9 +22,20 @@ class ObjectNode extends AbstractNestedLevel implements NodeInterface, WithChild
      */
     protected $collection;
 
-    public function __construct(object $value)
+    /**
+     * @var OptionsInterface
+     */
+    protected $options;
+
+    /**
+     * @var int
+     */
+    protected $nestedLevel = 0;
+
+    public function __construct(object $value, OptionsInterface $options)
     {
         $this->value = $value;
+        $this->options = $options;
     }
 
     /**
@@ -48,6 +59,14 @@ class ObjectNode extends AbstractNestedLevel implements NodeInterface, WithChild
     /**
      * @inheritDoc
      */
+    public function setNestedLevel(int $nestedLevel): void
+    {
+        $this->nestedLevel = $nestedLevel;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getChilds(): KeyValueCollectionInterface
     {
         if ($this->collection !== null) {
@@ -56,11 +75,14 @@ class ObjectNode extends AbstractNestedLevel implements NodeInterface, WithChild
 
         $this->collection = new KeyValueCollection();
 
-        if ($this->nestedLevel > $this->maxNestedLevel) {
-            $this->collection[] = new KeyValue(new ReflectionNode('<...>'));
+        if ($this->options->getMaxNestedLevel() && $this->nestedLevel > $this->options->getMaxNestedLevel()) {
+            $this->collection[] = new KeyValue(new ImageNode('<...>'));
 
             return $this->collection;
         }
+
+        $keyOptions = clone $this->options;
+        $keyOptions->setMaxLength(100);
 
         $reflection = new ReflectionObject($this->value);
         foreach ($reflection->getProperties() as $property) {
@@ -81,16 +103,13 @@ class ObjectNode extends AbstractNestedLevel implements NodeInterface, WithChild
                 . $property->getName()
                 . (!$property->isDefault() ? '"' : '');
 
-            $nodeValue = NodeFactory::factory($property->getValue($this->value));
+            $nodeValue = NodeFactory::factory($property->getValue($this->value), $this->options);
             if ($nodeValue instanceof NestedLevelInterface) {
-                $nodeValue->setMaxNestedLevel($this->maxNestedLevel)
-                    ->setNestedLevel($this->nestedLevel + 1);
+                $nodeValue->setNestedLevel($this->nestedLevel + 1);
             }
+            $nodeKey = new StringNode($propertyName, $keyOptions);
 
-            $this->collection[] = new KeyValue(
-                $nodeValue,
-                new StringNode($propertyName)
-            );
+            $this->collection[] = new KeyValue($nodeValue, $nodeKey);
         }
 
         return $this->collection;

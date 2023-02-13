@@ -7,11 +7,22 @@ namespace Fi1a\VarDumper\Nodes;
 /**
  * Тип строка
  */
-class StringNode extends AbstractNode implements CountableInterface
+class StringNode implements NodeInterface, CountableInterface
 {
-    public function __construct(string $value)
+    /**
+     * @var mixed
+     */
+    protected $value;
+
+    /**
+     * @var OptionsInterface
+     */
+    protected $options;
+
+    public function __construct(string $value, OptionsInterface $options)
     {
         $this->value = $value;
+        $this->options = $options;
     }
 
     /**
@@ -20,6 +31,19 @@ class StringNode extends AbstractNode implements CountableInterface
     public function getType(): string
     {
         return self::TYPE_STRING;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getValue(): string
+    {
+        $value = (string) $this->value;
+        if ($this->options->getMaxLength() && $this->getCount() > $this->options->getMaxLength()) {
+            $value = mb_substr($value, 0, $this->options->getMaxLength()) . ' <...>';
+        }
+
+        return $value;
     }
 
     /**
