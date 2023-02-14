@@ -79,7 +79,7 @@ class HtmlHandler implements HandlerInterface
                 $this->handleCallable($node, $indent);
 
                 break;
-            case NodeInterface::TYPE_REFLECTION:
+            case NodeInterface::TYPE_IMAGE:
                 $this->handleImage($node, $indent);
 
                 break;

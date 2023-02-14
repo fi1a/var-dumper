@@ -19,7 +19,7 @@ class ImageNodeTest extends TestCase
     public function testType(): void
     {
         $node = new ImageNode('string');
-        $this->assertEquals(NodeInterface::TYPE_REFLECTION, $node->getType());
+        $this->assertEquals(NodeInterface::TYPE_IMAGE, $node->getType());
     }
 
     /**

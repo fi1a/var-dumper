@@ -19,6 +19,6 @@ class ImageNode extends AbstractNode
      */
     public function getType(): string
     {
-        return self::TYPE_REFLECTION;
+        return self::TYPE_IMAGE;
     }
 }
