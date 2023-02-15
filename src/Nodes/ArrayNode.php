@@ -113,7 +113,10 @@ class ArrayNode extends AbstractNode implements CountableInterface, WithChildsIn
                 $nodeValue->setNestedLevel($this->nestedLevel + 1);
             }
             if (static::$isReflectionReferenceExists) {
-                /** @var ReflectionReference|null $reflectionReference */
+                /**
+                 * @var ReflectionReference|null $reflectionReference
+                 * @psalm-suppress UndefinedDocblockClass
+                 */
                 $reflectionReference = ReflectionReference::fromArrayElement($this->value, $key);
                 if ($reflectionReference && $reflectionReference->getId()) {
                     $nodeValue->setByReference(true);
