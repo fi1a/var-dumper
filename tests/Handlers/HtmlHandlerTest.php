@@ -198,6 +198,8 @@ class HtmlHandlerTest extends TestCase
 
     /**
      * Вывод значения массива по ссылке
+     *
+     * @requires PHP >= 7.4
      */
     public function testByReference(): void
     {

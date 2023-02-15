@@ -114,10 +114,10 @@ class ArrayNode extends AbstractNode implements CountableInterface, WithChildsIn
             }
             if (static::$isReflectionReferenceExists) {
                 /**
+                 * @var ReflectionReference|null $reflectionReference
                  * @psalm-suppress UndefinedDocblockClass
                  * @psalm-suppress UndefinedClass
                  */
-                /** @var ReflectionReference|null $reflectionReference */
                 $reflectionReference = ReflectionReference::fromArrayElement($this->value, $key);
                 /** @psalm-suppress UndefinedDocblockClass */
                 if ($reflectionReference && $reflectionReference->getId()) {
