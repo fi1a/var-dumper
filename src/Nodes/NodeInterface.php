@@ -38,4 +38,16 @@ interface NodeInterface
      * Возвращает значение
      */
     public function getValue(): string;
+
+    /**
+     * Ссылка или нет
+     */
+    public function isByReference(): bool;
+
+    /**
+     * Устанавливает значение ссылки
+     *
+     * @return $this
+     */
+    public function setByReference(bool $byReference);
 }

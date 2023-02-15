@@ -195,4 +195,20 @@ class ConsoleHandlerTest extends TestCase
 
         $handler->handle(new StringNode('test', new Options()), __FILE__);
     }
+
+    /**
+     * Вывод значения массива по ссылке
+     */
+    public function testByReference(): void
+    {
+        $handler = $this->getMockBuilder(ConsoleHandler::class)
+            ->onlyMethods(['handleByReference'])
+            ->setConstructorArgs([$this->getConsoleOutput()])
+            ->getMock();
+
+        $handler->expects($this->once())->method('handleByReference');
+
+        $array = [1, 2, 3];
+        $handler->handle(NodeFactory::factory([1, 2, 3, &$array], new Options()));
+    }
 }

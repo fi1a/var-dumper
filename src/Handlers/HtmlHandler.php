@@ -50,6 +50,9 @@ class HtmlHandler implements HandlerInterface
      */
     protected function handleType(NodeInterface $node, int $indent = 0): void
     {
+        if ($node->isByReference()) {
+            $this->handleByReference();
+        }
         switch ($node->getType()) {
             case NodeInterface::TYPE_STRING:
                 $this->handleString($node);
@@ -92,6 +95,16 @@ class HtmlHandler implements HandlerInterface
 
                 break;
         }
+    }
+
+    /**
+     * Вывод знака ссылки
+     *
+     * @codeCoverageIgnore
+     */
+    protected function handleByReference(): void
+    {
+        echo '<span class="vd-reference">&amp;</span>';
     }
 
     /**

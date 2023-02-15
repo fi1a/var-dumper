@@ -7,7 +7,7 @@ namespace Fi1a\VarDumper\Nodes;
 /**
  * Тип resource
  */
-class ResourceNode implements NodeInterface
+class ResourceNode extends AbstractNode
 {
     /**
      * @var resource

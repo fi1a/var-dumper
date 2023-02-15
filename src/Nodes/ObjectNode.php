@@ -10,7 +10,7 @@ use ReflectionObject;
 /**
  * Тип callable
  */
-class ObjectNode implements NodeInterface, WithChildsInterface, NestedLevelInterface
+class ObjectNode extends AbstractNode implements WithChildsInterface, NestedLevelInterface
 {
     /**
      * @var object

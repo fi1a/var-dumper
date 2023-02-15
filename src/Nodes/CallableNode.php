@@ -13,7 +13,7 @@ use const PHP_EOL;
 /**
  * Тип callable
  */
-class CallableNode implements NodeInterface, WithChildsInterface
+class CallableNode extends AbstractNode implements WithChildsInterface
 {
     /**
      * @var callable
