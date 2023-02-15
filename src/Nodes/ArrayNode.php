@@ -100,7 +100,6 @@ class ArrayNode extends AbstractNode implements CountableInterface, WithChildsIn
 
         $index = 0;
         /**
-         * @var mixed $key
          * @var mixed $value
          */
         foreach ($this->value as $key => $value) {
