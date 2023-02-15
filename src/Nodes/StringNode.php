@@ -7,10 +7,10 @@ namespace Fi1a\VarDumper\Nodes;
 /**
  * Тип строка
  */
-class StringNode implements NodeInterface, CountableInterface
+class StringNode extends AbstractNode implements CountableInterface
 {
     /**
-     * @var mixed
+     * @var string
      */
     protected $value;
 
@@ -38,7 +38,7 @@ class StringNode implements NodeInterface, CountableInterface
      */
     public function getValue(): string
     {
-        $value = (string) $this->value;
+        $value = $this->value;
         if ($this->options->getMaxLength() && $this->getCount() > $this->options->getMaxLength()) {
             $value = mb_substr($value, 0, $this->options->getMaxLength()) . ' <...>';
         }
@@ -51,6 +51,6 @@ class StringNode implements NodeInterface, CountableInterface
      */
     public function getCount(): int
     {
-        return mb_strlen((string) $this->value);
+        return mb_strlen($this->value);
     }
 }

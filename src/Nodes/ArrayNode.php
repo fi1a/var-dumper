@@ -4,11 +4,18 @@ declare(strict_types=1);
 
 namespace Fi1a\VarDumper\Nodes;
 
+use ReflectionReference;
+
 /**
  * Тип array
  */
-class ArrayNode implements NodeInterface, CountableInterface, WithChildsInterface, NestedLevelInterface
+class ArrayNode extends AbstractNode implements CountableInterface, WithChildsInterface, NestedLevelInterface
 {
+    /**
+     * @var bool|null
+     */
+    protected static $isReflectionReferenceExists;
+
     /**
      * @var array<array-key, mixed>
      */
@@ -87,9 +94,12 @@ class ArrayNode implements NodeInterface, CountableInterface, WithChildsInterfac
             return $this->collection;
         }
 
+        if (static::$isReflectionReferenceExists === null) {
+            static::$isReflectionReferenceExists = class_exists(ReflectionReference::class);
+        }
+
         $index = 0;
         /**
-         * @var mixed $key
          * @var mixed $value
          */
         foreach ($this->value as $key => $value) {
@@ -101,6 +111,18 @@ class ArrayNode implements NodeInterface, CountableInterface, WithChildsInterfac
             $nodeValue = NodeFactory::factory($value, $this->options);
             if ($nodeValue instanceof NestedLevelInterface) {
                 $nodeValue->setNestedLevel($this->nestedLevel + 1);
+            }
+            if (static::$isReflectionReferenceExists) {
+                /**
+                 * @var ReflectionReference|null $reflectionReference
+                 * @psalm-suppress UndefinedDocblockClass
+                 * @psalm-suppress UndefinedClass
+                 */
+                $reflectionReference = ReflectionReference::fromArrayElement($this->value, $key);
+                /** @psalm-suppress UndefinedDocblockClass */
+                if ($reflectionReference && $reflectionReference->getId()) {
+                    $nodeValue->setByReference(true);
+                }
             }
             $this->collection[] = new KeyValue($nodeValue, NodeFactory::factory($key, $this->options));
             $index++;

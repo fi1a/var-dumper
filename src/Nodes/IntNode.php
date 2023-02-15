@@ -9,6 +9,11 @@ namespace Fi1a\VarDumper\Nodes;
  */
 class IntNode extends AbstractNode
 {
+    /**
+     * @var int
+     */
+    protected $value;
+
     public function __construct(int $value)
     {
         $this->value = $value;

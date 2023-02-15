@@ -8,26 +8,29 @@ use Fi1a\VarDumper\Nodes\OptionsInterface;
 /**
  * Выводит и оформляет информацию о переменной
  *
- * @param mixed $var
+ * @param mixed ...$vars
  */
-function dump($var): void
+function dump(...$vars): void
 {
     /** @var DumperInterface $dumper */
     $dumper = di()->get(DumperInterface::class);
     /** @var OptionsInterface $options */
     $options = di()->get(OptionsInterface::class);
-    $dumper->dump($var, $options);
+    /** @var mixed $var */
+    foreach ($vars as $var) {
+        $dumper->dump($var, $options);
+    }
 }
 
 /**
  * Выводит и оформляет информацию о переменной. Прекращает работу скрипта
  *
- * @param mixed $var
+ * @param mixed ...$vars
  *
  * @codeCoverageIgnore
  */
-function dumpd($var): void
+function dumpDie(...$vars): void
 {
-    dump($var);
-    die;
+    dump($vars);
+    exit(1);
 }

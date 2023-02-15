@@ -57,6 +57,9 @@ class ConsoleHandler implements HandlerInterface
      */
     protected function handleType(NodeInterface $node, int $indent = 0, bool $newLine = true): void
     {
+        if ($node->isByReference()) {
+            $this->handleByReference();
+        }
         switch ($node->getType()) {
             case NodeInterface::TYPE_STRING:
                 $this->handleString($node);
@@ -103,6 +106,16 @@ class ConsoleHandler implements HandlerInterface
         if ($newLine) {
             $this->output->writeln();
         }
+    }
+
+    /**
+     * Вывод знака ссылки
+     *
+     * @codeCoverageIgnore
+     */
+    protected function handleByReference(): void
+    {
+        $this->output->write('&', [], new ANSIStyle(ANSIColor::WHITE));
     }
 
     /**

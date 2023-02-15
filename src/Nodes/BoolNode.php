@@ -9,6 +9,11 @@ namespace Fi1a\VarDumper\Nodes;
  */
 class BoolNode extends AbstractNode
 {
+    /**
+     * @var bool
+     */
+    protected $value;
+
     public function __construct(bool $value)
     {
         $this->value = $value;

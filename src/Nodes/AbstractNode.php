@@ -10,15 +10,25 @@ namespace Fi1a\VarDumper\Nodes;
 abstract class AbstractNode implements NodeInterface
 {
     /**
-     * @var mixed
+     * @var bool
      */
-    protected $value;
+    protected $byReference = false;
 
     /**
      * @inheritDoc
      */
-    public function getValue(): string
+    public function isByReference(): bool
     {
-        return (string) $this->value;
+        return $this->byReference;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setByReference(bool $byReference)
+    {
+        $this->byReference = $byReference;
+
+        return $this;
     }
 }

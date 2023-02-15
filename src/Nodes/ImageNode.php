@@ -9,6 +9,11 @@ namespace Fi1a\VarDumper\Nodes;
  */
 class ImageNode extends AbstractNode
 {
+    /**
+     * @var string
+     */
+    protected $value;
+
     public function __construct(string $value)
     {
         $this->value = $value;
@@ -20,5 +25,13 @@ class ImageNode extends AbstractNode
     public function getType(): string
     {
         return self::TYPE_IMAGE;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getValue(): string
+    {
+        return $this->value;
     }
 }
