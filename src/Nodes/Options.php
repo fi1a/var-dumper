@@ -12,17 +12,29 @@ class Options implements OptionsInterface
     /**
      * @var int
      */
-    protected $maxNestedLevel = 5;
+    protected $maxNestedLevel;
 
     /**
      * @var int
      */
-    protected $maxLength = 500;
+    protected $maxLength;
 
     /**
      * @var int
      */
-    protected $maxCount = 50;
+    protected $maxCount;
+
+    /**
+     * @inheritDoc
+     */
+    public function __construct()
+    {
+        $config = config('fi1a/var-dumper');
+
+        $this->setMaxNestedLevel((int) $config->getInt('maxNestedLevel', 5));
+        $this->setMaxLength((int) $config->getInt('maxLength', 500));
+        $this->setMaxCount((int) $config->getInt('maxCount', 50));
+    }
 
     /**
      * @inheritDoc
