@@ -40,8 +40,8 @@ class CallableNodeTest extends TestCase
     {
         $node = new CallableNode(function ($a, ?string $b = null, TestCase $testCase, &$byRef) {
         });
-        $this->assertCount(1, $node->getChilds());
+        $this->assertCount(1, $node->getChildren());
         $node = new CallableNode([$this, 'testChilds']);
-        $this->assertCount(1, $node->getChilds());
+        $this->assertCount(1, $node->getChildren());
     }
 }

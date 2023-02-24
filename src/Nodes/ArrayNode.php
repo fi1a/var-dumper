@@ -80,7 +80,7 @@ class ArrayNode extends AbstractNode implements CountableInterface, WithChildsIn
     /**
      * @inheritDoc
      */
-    public function getChilds(): KeyValueCollectionInterface
+    public function getChildren(): KeyValueCollectionInterface
     {
         if ($this->collection !== null) {
             return $this->collection;

@@ -31,6 +31,7 @@ class NodeFactoryTest extends TestCase
     {
         return [
             [StringNode::class, 'string'],
+            [StringNode::class, 'file'],
             [IntNode::class, 100],
             [FloatNode::class, 100.1],
             [BoolNode::class, true],

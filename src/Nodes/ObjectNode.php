@@ -67,7 +67,7 @@ class ObjectNode extends AbstractNode implements WithChildsInterface, NestedLeve
     /**
      * @inheritDoc
      */
-    public function getChilds(): KeyValueCollectionInterface
+    public function getChildren(): KeyValueCollectionInterface
     {
         if ($this->collection !== null) {
             return $this->collection;

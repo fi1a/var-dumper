@@ -31,6 +31,6 @@ function dump(...$vars): void
  */
 function dumpDie(...$vars): void
 {
-    dump($vars);
+    dump(...$vars);
     exit(1);
 }

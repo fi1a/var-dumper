@@ -44,7 +44,7 @@ class CallableNode extends AbstractNode implements WithChildsInterface
     /**
      * @inheritDoc
      */
-    public function getChilds(): KeyValueCollectionInterface
+    public function getChildren(): KeyValueCollectionInterface
     {
         $collection = new KeyValueCollection();
 
