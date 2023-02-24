@@ -45,9 +45,9 @@ class ObjectNodeTest extends TestCase
         $object = new ClassFoo();
         $object->dynA = 'string';
         $node = new ObjectNode($object, new Options());
-        $collection = $node->getChilds();
+        $collection = $node->getChildren();
         $this->assertCount(8, $collection);
-        $this->assertEquals($collection, $node->getChilds());
+        $this->assertEquals($collection, $node->getChildren());
     }
 
     /**
@@ -60,7 +60,7 @@ class ObjectNodeTest extends TestCase
         $node = new ObjectNode($object, new Options());
 
         do {
-            $childs = $node->getChilds();
+            $childs = $node->getChildren();
             $this->assertCount(1, $childs);
             $node = $childs->first()->getValue();
         } while ($node instanceof NestedLevelInterface);

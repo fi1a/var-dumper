@@ -190,7 +190,7 @@ class HtmlHandler implements HandlerInterface
         echo PHP_EOL;
         if ($node instanceof WithChildsInterface) {
             /** @var KeyValueInterface $child */
-            foreach ($node->getChilds() as $child) {
+            foreach ($node->getChildren() as $child) {
                 echo '    ';
                 $this->handleType($child->getValue(), $indent + 1);
                 echo PHP_EOL;
@@ -212,7 +212,7 @@ class HtmlHandler implements HandlerInterface
         echo ' <span class="vd-square">{</span>' . PHP_EOL;
         if ($node instanceof WithChildsInterface) {
             /** @var KeyValueInterface $child */
-            foreach ($node->getChilds() as $child) {
+            foreach ($node->getChildren() as $child) {
                 echo '    ';
                 $keyNode = $child->getKey();
                 if ($keyNode) {
@@ -275,7 +275,7 @@ class HtmlHandler implements HandlerInterface
         echo PHP_EOL;
         if ($node instanceof WithChildsInterface) {
             /** @var KeyValueInterface $child */
-            foreach ($node->getChilds() as $child) {
+            foreach ($node->getChildren() as $child) {
                 echo str_repeat('    ', $indent + 1);
                 $key = $child->getKey();
                 if ($key) {

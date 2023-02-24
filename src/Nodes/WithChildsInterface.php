@@ -12,5 +12,5 @@ interface WithChildsInterface
     /**
      * Возвращает вложенные узлы
      */
-    public function getChilds(): KeyValueCollectionInterface;
+    public function getChildren(): KeyValueCollectionInterface;
 }

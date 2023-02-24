@@ -48,9 +48,9 @@ class ArrayNodeTest extends TestCase
     public function testChilds(): void
     {
         $node = new ArrayNode([1, 2, 3], new Options());
-        $collection = $node->getChilds();
+        $collection = $node->getChildren();
         $this->assertCount(3, $collection);
-        $this->assertEquals($collection, $node->getChilds());
+        $this->assertEquals($collection, $node->getChildren());
     }
 
     /**
@@ -61,9 +61,9 @@ class ArrayNodeTest extends TestCase
         $options = new Options();
         $options->setMaxCount(1);
         $node = new ArrayNode([1, 2, 3], $options);
-        $collection = $node->getChilds();
+        $collection = $node->getChildren();
         $this->assertCount(2, $collection);
-        $this->assertEquals($collection, $node->getChilds());
+        $this->assertEquals($collection, $node->getChildren());
     }
 
     /**
@@ -76,7 +76,7 @@ class ArrayNodeTest extends TestCase
         $node = new ArrayNode($array, new Options());
 
         do {
-            $childs = $node->getChilds();
+            $childs = $node->getChildren();
             $this->assertCount(1, $childs);
             $node = $childs->first()->getValue();
         } while ($node instanceof NestedLevelInterface);

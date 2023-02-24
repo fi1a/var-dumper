@@ -199,7 +199,7 @@ class ConsoleHandler implements HandlerInterface
         $this->output->writeln(' [', [], new ANSIStyle(ANSIColor::YELLOW));
         if ($node instanceof WithChildsInterface) {
             /** @var KeyValueInterface $child */
-            foreach ($node->getChilds() as $child) {
+            foreach ($node->getChildren() as $child) {
                 $this->output->write(str_repeat('  ', $indent + 1));
                 $key = $child->getKey();
                 if ($key) {
@@ -245,7 +245,7 @@ class ConsoleHandler implements HandlerInterface
 
         if ($node instanceof WithChildsInterface) {
             /** @var KeyValueInterface $child */
-            foreach ($node->getChilds() as $child) {
+            foreach ($node->getChildren() as $child) {
                 $this->output->write('  ');
                 $this->handleType($child->getValue(), $indent + 1);
             }
@@ -276,7 +276,7 @@ class ConsoleHandler implements HandlerInterface
         $this->output->writeln();
         if ($node instanceof WithChildsInterface) {
             /** @var KeyValueInterface $child */
-            foreach ($node->getChilds() as $child) {
+            foreach ($node->getChildren() as $child) {
                 $this->output->write('  ');
                 $keyNode = $child->getKey();
                 if ($keyNode) {
